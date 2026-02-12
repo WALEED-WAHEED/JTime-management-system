@@ -1,57 +1,38 @@
 # JTime Management System
 
-JTime is a time and task management application designed to facilitate planning and monitoring of activities.
+JTime is a modern Java-based application designed for efficient time and activity management. It facilitates planning, monitoring, and reporting of commitments through a structured approach and clean architecture.
 
-## Features
+## 🚀 Key Features
 
-- **Project Management:** Create and view active projects. Complete projects only when all tasks are finished.
-- **Task Management:** Associate tasks with projects, estimate time (hours), and record actual duration.
-- **Daily Planning:** Interface to assign tasks to specific days with automatic effort calculation.
-- **Reporting:** Summaries organized by project and time interval, comparing estimated vs actual time.
+- **Project Management:** Create and track active projects. Built-in validation ensures projects can only be closed when all tasks are complete.
+- **Task Tracking:** Associate tasks with projects, set time estimates (hours), and record actual duration upon completion.
+- **Daily Planning:** Assign tasks to specific days with automatic calculation of total daily effort.
+- **Advanced Reporting:** Generate project-based and time-based reports comparing estimated vs. actual time.
 
-## Tech Stack
+## 🏗️ Architecture & Design
 
-- **Java 21** (utilizing sealed interfaces, switch expressions, and streams)
-- **JavaFX** for the User Interface
-- **Gradle** for build and dependency management
-- **Hibernate / JPA** for persistence
-- **H2 Database** (in-memory)
-- **Lombok** to reduce boilerplate
-- **JUnit 5** for testing
+The system is built following best practices in software engineering:
 
-## Architecture
+- **SOLID Principles:** High extensibility through interfaces and composition.
+- **Layered Architecture:**
+  - **Model:** Business logic and data integrity.
+  - **Persistence:** Clean separation using JPA/Hibernate.
+  - **UI/Controller:** Interactive user interface management.
+- **Interface-First Design:** Core components like `Taggable`, `TimeTrackable`, and `JTimeManager` define clear contracts for system behavior.
 
-The project follows SOLID principles and a layered architecture:
-- **Model Layer:** Business logic and data integrity.
-- **Persistence Layer:** JPA/Hibernate for data storage (separated from domain model via Mappers).
-- **Controller/UI Layer:** Manages user interaction.
-- **Manager (Composition):** Coordinates complex operations across multiple entities.
+## 🛠️ Technology Stack
 
-## Getting Started
+- **Java 21:** Utilizing modern features like Sealed Interfaces, Records, and Stream API.
+- **JPA / Hibernate:** ORM for data persistence.
+- **H2 Database:** In-memory database for rapid prototyping.
+- **Gradle:** Build automation and dependency management.
 
-### Prerequisites
+## 📂 Project Structure
 
-- Java 21 JDK or higher
-- Gradle (optional, a wrapper is included)
+- `src/main/java`: Core application logic and implementations.
+- `src/main/resources`: Configuration files and UI definitions (FXML).
+- `relazione.md`: Detailed technical documentation and project requirements.
+- `.gitignore`: Configured to exclude build artifacts, IDE settings, and large sample files.
 
-### Running the Application
-
-To run the application, use the following command:
-
-```bash
-./gradlew run
-```
-
-On Windows:
-
-```powershell
-.\gradlew.bat run
-```
-
-### Running Tests
-
-To execute unit tests:
-
-```bash
-./gradlew test
-```
+---
+*Created as part of the initial repository setup.*
