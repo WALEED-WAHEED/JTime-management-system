@@ -1,0 +1,25 @@
+package it.unicam.cs.mpgc.jtime126294.util;
+
+import lombok.Getter;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+/**
+ * Utility class for managing Hibernate SessionFactory lifecycle.
+ */
+public class HibernateUtil {
+    @Getter
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private static SessionFactory buildSessionFactory() {
+        try {
+            return new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+    
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
+}

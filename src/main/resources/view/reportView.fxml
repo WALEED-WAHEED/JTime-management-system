@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="it.unicam.cs.mpgc.jtime126294.controller.ReportController"
+      spacing="10" style="-fx-padding: 20;">
+    
+    <Label text="Reporting" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Interval:"/>
+        <DatePicker fx:id="startDate" />
+        <Label text="to"/>
+        <DatePicker fx:id="endDate" />
+        <Button text="Update" onAction="#generateReport"/>
+    </HBox>
+    
+    <TreeView fx:id="reportTreeView" VBox.vgrow="ALWAYS" />
+</VBox>

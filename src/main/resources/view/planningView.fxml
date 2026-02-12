@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="it.unicam.cs.mpgc.jtime126294.controller.PlanningController"
+      spacing="10" style="-fx-padding: 20;">
+    
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Daily Planning" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <DatePicker fx:id="datePicker" />
+    </HBox>
+    
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="Unassigned Tasks" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="unassignedTasksList" VBox.vgrow="ALWAYS" />
+            <Button text="Assign to Selected Day &gt;&gt;" onAction="#handleAssignTask" maxWidth="Infinity"/>
+        </VBox>
+        
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="Tasks for Selected Day" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="dayTasksList" VBox.vgrow="ALWAYS" />
+            <Button text="&lt;&lt; Unassign Task" onAction="#handleUnassignTask" maxWidth="Infinity"/>
+            <Label fx:id="totalEffortLabel" text="Total Effort: 0h 0m" style="-fx-font-size: 14; -fx-padding: 10 0 0 0;"/>
+        </VBox>
+    </HBox>
+</VBox>

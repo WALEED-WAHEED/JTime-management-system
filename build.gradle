@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'java-library'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'it.unicam.cs.mpgc.jtime126294'
+version = '1.0.0'
+
+application {
+    mainClass = 'it.unicam.cs.mpgc.jtime126294.Main'
+}
+
+javafx {
+    version = '21.0.7'
+    modules = [ 'javafx.controls' , 'javafx.fxml', 'javafx.web']
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    compileOnly("org.projectlombok:lombok:1.18.38")
+    annotationProcessor("org.projectlombok:lombok:1.18.38")
+
+    def javafxVersion = '21.0.7'
+    implementation ("org.openjfx:javafx-controls:${javafxVersion}")
+    implementation ("org.openjfx:javafx-fxml:${javafxVersion}")
+
+    // Hibernate core
+    implementation 'org.hibernate.orm:hibernate-core:7.0.0.Final'
+    // JDBC driver (H2)
+    implementation 'com.h2database:h2:2.3.232'
+    // Jakarta Persistence
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
+}
+
+test {
+    useJUnitPlatform()
+}
