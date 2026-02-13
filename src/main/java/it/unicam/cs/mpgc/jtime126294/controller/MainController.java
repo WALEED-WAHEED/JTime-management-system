@@ -48,9 +48,15 @@ public class MainController {
 
     @FXML
     public void saveAndExit() {
-        persistenceService.saveAll(model.getProjects());
-        HibernateUtil.shutdown();
+        saveData();
         System.exit(0);
+    }
+
+    public void saveData() {
+        if (model != null && persistenceService != null) {
+            persistenceService.saveAll(model.getProjects());
+            HibernateUtil.shutdown();
+        }
     }
 
     private void loadView(String fxmlPath) {

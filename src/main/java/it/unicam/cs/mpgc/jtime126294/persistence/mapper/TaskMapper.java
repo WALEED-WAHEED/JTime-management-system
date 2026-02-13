@@ -14,6 +14,7 @@ public class TaskMapper {
         if (domain == null) return null;
         
         TaskEntity entity = new TaskEntity(
+                domain.getName(),
                 domain.getDescription(),
                 (TaskState) domain.getState(),
                 domain.getEstimatedTime()
@@ -45,6 +46,7 @@ public class TaskMapper {
         
         TaskImpl domain = new TaskImpl(
                 entity.getId(),
+                entity.getName(),
                 entity.getDescription(),
                 entity.getEstimatedTime()
         );

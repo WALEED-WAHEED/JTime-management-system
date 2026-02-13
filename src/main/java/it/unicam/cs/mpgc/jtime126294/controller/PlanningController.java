@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jtime126294.controller;
 
+import it.unicam.cs.mpgc.jtime126294.model.impl.ProjectImpl;
 import it.unicam.cs.mpgc.jtime126294.model.impl.TaskImpl;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,6 +15,9 @@ public class PlanningController extends BaseController {
     private DatePicker datePicker;
 
     @FXML
+    private ComboBox<ProjectImpl> projectComboBox;
+
+    @FXML
     private ListView<TaskImpl> dayTasksList;
 
     @FXML
@@ -26,6 +30,22 @@ public class PlanningController extends BaseController {
     protected void onModelSet() {
         datePicker.setValue(LocalDate.now());
         datePicker.valueProperty().addListener((obs, oldVal, newVal) -> refresh());
+        
+        projectComboBox.setItems(FXCollections.observableArrayList(model.getProjects()));
+        projectComboBox.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(ProjectImpl item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+        projectComboBox.setButtonCell(projectComboBox.getCellFactory().call(null));
+        projectComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> refresh());
+        
         refresh();
     }
 
@@ -36,14 +56,18 @@ public class PlanningController extends BaseController {
 
         dayTasksList.setItems(FXCollections.observableArrayList(model.getTasksForDay(selectedDate)));
         
-        // Find tasks not planned for any date
-        unassignedTasksList.setItems(FXCollections.observableArrayList(
-                model.getProjects().stream()
-                        .flatMap(p -> p.getTasks().stream())
-                        .filter(t -> t.getPlannedDate() == null)
-                        .map(t -> (TaskImpl) t)
-                        .collect(Collectors.toList())
-        ));
+        ProjectImpl selectedProject = projectComboBox.getValue();
+        if (selectedProject != null) {
+            // Find tasks for selected project not planned for any date
+            unassignedTasksList.setItems(FXCollections.observableArrayList(
+                    selectedProject.getTasks().stream()
+                            .filter(t -> t.getPlannedDate() == null)
+                            .map(t -> (TaskImpl) t)
+                            .collect(Collectors.toList())
+            ));
+        } else {
+            unassignedTasksList.getItems().clear();
+        }
 
         Duration total = model.getTotalEffortForDay(selectedDate);
         totalEffortLabel.setText(String.format("Total Effort: %dh %dm", total.toHours(), total.toMinutesPart()));

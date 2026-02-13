@@ -19,6 +19,18 @@ public interface Task extends Taggable, TimeTrackable {
     String getDescription();
 
     /**
+     * Gets the name of the task.
+     * @return task name
+     */
+    String getName();
+
+    /**
+     * Sets the name of the task.
+     * @param name task name
+     */
+    void setName(String name);
+
+    /**
      * Gets the current state of the task.
      * @return task state
      */

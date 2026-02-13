@@ -56,6 +56,28 @@ public class ProjectController extends BaseController {
         colEstimate.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(formatDuration(cell.getValue().getEstimatedTime())));
         colActual.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(formatDuration(cell.getValue().getActualTime())));
         colStatus.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getState().getName()));
+        
+        // Context Menu
+        taskTable.setRowFactory(tv -> {
+            TableRow<TaskImpl> row = new TableRow<>();
+            ContextMenu menu = new ContextMenu();
+            MenuItem cancelItem = new MenuItem("Cancel Task");
+            cancelItem.setOnAction(event -> {
+                TaskImpl task = row.getItem();
+                if (task != null) {
+                    task.setState(it.unicam.cs.mpgc.jtime126294.model.TaskState.CANCELLED);
+                    taskTable.refresh();
+                }
+            });
+            menu.getItems().add(cancelItem);
+            
+            row.contextMenuProperty().bind(
+                javafx.beans.binding.Bindings.when(row.emptyProperty())
+                .then((ContextMenu)null)
+                .otherwise(menu)
+            );
+            return row;
+        });
     }
 
     private String formatDuration(Duration duration) {
@@ -95,24 +117,30 @@ public class ProjectController extends BaseController {
         ProjectImpl selected = projectList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
         
-        // Simple input for description and hours
-        TextInputDialog descDialog = new TextInputDialog();
-        descDialog.setTitle("New Task");
-        descDialog.setHeaderText("Description");
+        // Input for name, description and hours
+        TextInputDialog nameDialog = new TextInputDialog();
+        nameDialog.setTitle("New Task");
+        nameDialog.setHeaderText("Task Name");
         
-        descDialog.showAndWait().ifPresent(desc -> {
-            TextInputDialog hoursDialog = new TextInputDialog("1");
-            hoursDialog.setTitle("New Task");
-            hoursDialog.setHeaderText("Estimated Hours");
+        nameDialog.showAndWait().ifPresent(name -> {
+            TextInputDialog descDialog = new TextInputDialog();
+            descDialog.setTitle("New Task");
+            descDialog.setHeaderText("Description");
             
-            hoursDialog.showAndWait().ifPresent(hours -> {
-                try {
-                    Duration duration = Duration.ofHours(Long.parseLong(hours));
-                    model.addTaskToProject(selected, desc, duration);
-                    showProjectDetails(selected);
-                } catch (NumberFormatException e) {
-                    new Alert(Alert.AlertType.ERROR, "Invalid hours format").show();
-                }
+            descDialog.showAndWait().ifPresent(desc -> {
+                TextInputDialog hoursDialog = new TextInputDialog("1");
+                hoursDialog.setTitle("New Task");
+                hoursDialog.setHeaderText("Estimated Hours");
+                
+                hoursDialog.showAndWait().ifPresent(hours -> {
+                    try {
+                        Duration duration = Duration.ofHours(Long.parseLong(hours));
+                        model.addTaskToProject(selected, name, desc, duration);
+                        showProjectDetails(selected);
+                    } catch (NumberFormatException e) {
+                        new Alert(Alert.AlertType.ERROR, "Invalid hours format").show();
+                    }
+                });
             });
         });
     }

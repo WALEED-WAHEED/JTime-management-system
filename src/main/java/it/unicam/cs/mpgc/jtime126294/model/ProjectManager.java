@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jtime126294.model;
 
+import java.time.Duration;
 import java.util.Collection;
 
 /**
@@ -36,13 +37,14 @@ public interface ProjectManager<P extends Project, T extends Task> {
     void deleteProject(P project);
 
     /**
-     * Adds a task to a project.
-     * @param project project to add to
+     * Adds a task to the project.
+     * @param project project to add task to
+     * @param name task name
      * @param description task description
      * @param estimate estimated duration
-     * @return the created task
+     * @return created task
      */
-    T addTaskToProject(P project, String description, java.time.Duration estimate);
+    T addTaskToProject(P project, String name, String description, Duration estimate);
 
     /**
      * Completes a task.

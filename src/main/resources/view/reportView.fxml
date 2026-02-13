@@ -18,5 +18,20 @@
         <Button text="Update" onAction="#generateReport"/>
     </HBox>
     
-    <TreeView fx:id="reportTreeView" VBox.vgrow="ALWAYS" />
+    <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS" orientation="HORIZONTAL">
+        <items>
+            <VBox spacing="5">
+                <Label text="Details" style="-fx-font-weight: bold;"/>
+                <TreeView fx:id="reportTreeView" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Label text="Visuals" style="-fx-font-weight: bold;"/>
+                <javafx.scene.chart.PieChart fx:id="statusChart" title="Task Status Distribution" VBox.vgrow="ALWAYS"/>
+                <javafx.scene.chart.BarChart fx:id="effortChart" title="Estimated vs Actual Effort">
+                    <xAxis><javafx.scene.chart.CategoryAxis label="Project"/></xAxis>
+                    <yAxis><javafx.scene.chart.NumberAxis label="Hours"/></yAxis>
+                </javafx.scene.chart.BarChart>
+            </VBox>
+        </items>
+    </SplitPane>
 </VBox>

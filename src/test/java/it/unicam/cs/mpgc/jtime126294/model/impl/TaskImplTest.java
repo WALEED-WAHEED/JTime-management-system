@@ -14,12 +14,13 @@ class TaskImplTest {
 
     @BeforeEach
     void setUp() {
-        task = new TaskImpl(1L, "Sample Task", Duration.ofHours(2));
+        task = new TaskImpl(1L, "Task Name", "Sample Task", Duration.ofHours(2));
     }
 
     @Test
     void testInitialState() {
         assertEquals(TaskState.PENDING, task.getState());
+        assertEquals("Task Name", task.getName());
         assertEquals("Sample Task", task.getDescription());
         assertEquals(Duration.ofHours(2), task.getEstimatedTime());
         assertEquals(Duration.ZERO, task.getActualTime());

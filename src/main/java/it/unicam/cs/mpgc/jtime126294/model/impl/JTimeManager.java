@@ -61,10 +61,10 @@ public class JTimeManager implements
     }
 
     @Override
-    public TaskImpl addTaskToProject(ProjectImpl project, String description, Duration estimate) {
+    public TaskImpl addTaskToProject(ProjectImpl project, String name, String description, Duration estimate) {
         if (!projects.contains(project)) throw new IllegalArgumentException("Project not managed");
         
-        TaskImpl task = new TaskImpl(nextTaskId++, description, estimate);
+        TaskImpl task = new TaskImpl(nextTaskId++, name, description, estimate);
         project.addTask(task);
         return task;
     }

@@ -22,6 +22,9 @@ public class TaskEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +46,8 @@ public class TaskEntity {
     @JoinColumn(name = "project_id")
     private ProjectEntity project;
 
-    public TaskEntity(String description, TaskState state, Duration estimatedTime) {
+    public TaskEntity(String name, String description, TaskState state, Duration estimatedTime) {
+        this.name = name;
         this.description = description;
         this.state = state;
         this.estimatedTime = estimatedTime;

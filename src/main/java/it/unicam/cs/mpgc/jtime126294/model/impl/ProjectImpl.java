@@ -66,4 +66,8 @@ public class ProjectImpl implements Project {
     public void setState(State state) {
         this.state = Objects.requireNonNull(state);
     }
+    @Override
+    public String toString() {
+        return name;
+    }
 }

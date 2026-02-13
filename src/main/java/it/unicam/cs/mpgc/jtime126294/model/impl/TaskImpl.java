@@ -19,6 +19,7 @@ import java.util.Set;
 @Setter
 public class TaskImpl implements Task {
     private Long id;
+    private String name;
     private String description;
     private State state;
     private Duration estimatedTime;
@@ -26,8 +27,9 @@ public class TaskImpl implements Task {
     private LocalDate plannedDate;
     private Set<String> tags;
 
-    public TaskImpl(Long id, String description, Duration estimatedTime) {
+    public TaskImpl(Long id, String name, String description, Duration estimatedTime) {
         this.id = id;
+        this.name = Objects.requireNonNull(name);
         this.description = Objects.requireNonNull(description);
         this.estimatedTime = Objects.requireNonNull(estimatedTime);
         this.state = TaskState.PENDING;
@@ -61,5 +63,9 @@ public class TaskImpl implements Task {
             throw new IllegalStateException("Cannot change state of a finished task");
         }
         this.state = Objects.requireNonNull(state);
+    }
+    @Override
+    public String toString() {
+        return name;
     }
 }
