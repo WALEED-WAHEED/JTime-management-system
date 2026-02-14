@@ -33,6 +33,7 @@ public class TaskEntity {
     private Duration estimatedTime;
     private Duration actualTime;
     private LocalDate plannedDate;
+    private LocalDate completionDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

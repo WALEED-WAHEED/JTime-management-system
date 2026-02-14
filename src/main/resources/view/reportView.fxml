@@ -10,28 +10,64 @@
     
     <Label text="Reporting" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
     
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Interval:"/>
-        <DatePicker fx:id="startDate" />
-        <Label text="to"/>
-        <DatePicker fx:id="endDate" />
-        <Button text="Update" onAction="#generateReport"/>
+    <HBox spacing="20" alignment="CENTER_LEFT">
+        <RadioButton fx:id="rbSingleProject" text="Single Project" selected="true"/>
+        <RadioButton fx:id="rbTimePeriod" text="Time Period"/>
     </HBox>
     
-    <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS" orientation="HORIZONTAL">
-        <items>
-            <VBox spacing="5">
-                <Label text="Details" style="-fx-font-weight: bold;"/>
-                <TreeView fx:id="reportTreeView" VBox.vgrow="ALWAYS" />
-            </VBox>
-            <VBox spacing="10" style="-fx-padding: 10;">
-                <Label text="Visuals" style="-fx-font-weight: bold;"/>
-                <javafx.scene.chart.PieChart fx:id="statusChart" title="Task Status Distribution" VBox.vgrow="ALWAYS"/>
-                <javafx.scene.chart.BarChart fx:id="effortChart" title="Estimated vs Actual Effort">
-                    <xAxis><javafx.scene.chart.CategoryAxis label="Project"/></xAxis>
-                    <yAxis><javafx.scene.chart.NumberAxis label="Hours"/></yAxis>
-                </javafx.scene.chart.BarChart>
-            </VBox>
-        </items>
-    </SplitPane>
+    <StackPane VBox.vgrow="ALWAYS">
+        <!-- Data Selection Controls -->
+        <VBox spacing="10">
+            <StackPane alignment="CENTER_LEFT">
+                <HBox fx:id="projectControls" spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Project:"/>
+                    <ComboBox fx:id="projectSelector" prefWidth="250"/>
+                </HBox>
+
+                <HBox fx:id="periodControls" spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+                    <Label text="From:"/>
+                    <DatePicker fx:id="startDate"/>
+                    <Label text="To:"/>
+                    <DatePicker fx:id="endDate"/>
+                    <Button text="Update" onAction="#generateReport"/>
+                </HBox>
+            </StackPane>
+            
+            <Separator/>
+            
+            <!-- Report Content -->
+            <StackPane VBox.vgrow="ALWAYS">
+                <!-- Single Project View -->
+                <VBox fx:id="singleProjectView" spacing="10">
+                    <HBox spacing="10" VBox.vgrow="ALWAYS">
+                         <javafx.scene.chart.PieChart fx:id="projectStatusChart" title="Task Status" HBox.hgrow="ALWAYS"/>
+                         <VBox spacing="20" alignment="CENTER_LEFT" prefWidth="200">
+                             <Label text="Project Statistics" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                             <Label fx:id="lblTotalEstimated" text="Total Estimated: 0h" style="-fx-font-size: 14px;"/>
+                             <Label fx:id="lblTotalActual" text="Total Actual: 0h" style="-fx-font-size: 14px;"/>
+                         </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Time Period View -->
+                <VBox fx:id="timePeriodView" spacing="10" visible="false" managed="false">
+                     <Label text="Scheduled Tasks (In Period)" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                     <TableView fx:id="scheduledTasksTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+                            <TableColumn fx:id="colTask" text="Task" prefWidth="200"/>
+                             <!-- Project column removed as TaskImpl doesn't link back directly without extra work, or we wrap it -->
+                            <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+                        </columns>
+                     </TableView>
+                     
+                     <Label text="Completed Tasks (In Period)" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                     <javafx.scene.chart.BarChart fx:id="completedTasksChart" title="Completed Tasks" legendVisible="false" VBox.vgrow="ALWAYS">
+                        <xAxis><javafx.scene.chart.CategoryAxis label="Date" fx:id="xAxisCompleted"/></xAxis>
+                        <yAxis><javafx.scene.chart.NumberAxis label="Count" fx:id="yAxisCompleted"/></yAxis>
+                     </javafx.scene.chart.BarChart>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </StackPane>
 </VBox>

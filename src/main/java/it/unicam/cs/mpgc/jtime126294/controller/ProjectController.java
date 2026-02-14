@@ -97,6 +97,7 @@ public class ProjectController extends BaseController {
                 project.getTasks().stream().map(t -> (TaskImpl) t).toList()
         ));
         btnCloseProject.setDisable(project.getState() == ProjectState.COMPLETED);
+        btnDeleteProject.setDisable(false);
     }
 
     @FXML
@@ -162,6 +163,32 @@ public class ProjectController extends BaseController {
                 showProjectDetails(projectList.getSelectionModel().getSelectedItem());
             } catch (NumberFormatException e) {
                 new Alert(Alert.AlertType.ERROR, "Invalid hours format").show();
+            }
+        });
+    }
+
+    @FXML
+    private Button btnDeleteProject;
+
+    @FXML
+    private void handleDeleteProject() {
+        ProjectImpl selected = projectList.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Project");
+        alert.setHeaderText("Delete Project '" + selected.getName() + "'?");
+        alert.setContentText("Are you sure you want to delete this project? This action cannot be undone.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                model.deleteProject(selected);
+                refreshProjectList();
+                // Clear details
+                projectTitleLabel.setText("Select a project");
+                taskTable.getItems().clear();
+                btnCloseProject.setDisable(true);
+                btnDeleteProject.setDisable(true);
             }
         });
     }

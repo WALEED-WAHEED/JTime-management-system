@@ -53,4 +53,16 @@ public interface Task extends Taggable, TimeTrackable {
      * @param date planned date
      */
     void setPlannedDate(LocalDate date);
+
+    /**
+     * Gets the date when the task was completed.
+     * @return completion date or null if not completed
+     */
+    LocalDate getCompletionDate();
+
+    /**
+     * Sets the date when the task was completed.
+     * @param date completion date
+     */
+    void setCompletionDate(LocalDate date);
 }

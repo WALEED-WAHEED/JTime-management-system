@@ -19,6 +19,7 @@
             <Label fx:id="projectTitleLabel" text="Select a project" style="-fx-font-size: 18; -fx-font-weight: bold;" HBox.hgrow="ALWAYS"/>
             <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="btnCloseProject" text="Close Project" onAction="#handleCloseProject" disable="true"/>
+            <Button fx:id="btnDeleteProject" text="Delete Project" onAction="#handleDeleteProject" disable="true"/>
         </HBox>
         
         <TableView fx:id="taskTable" VBox.vgrow="ALWAYS">

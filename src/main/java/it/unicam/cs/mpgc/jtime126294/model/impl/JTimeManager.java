@@ -73,6 +73,7 @@ public class JTimeManager implements
     public void completeTask(TaskImpl task, Duration actualTime) {
         task.setActualTime(actualTime);
         task.setState(TaskState.COMPLETED);
+        task.setCompletionDate(LocalDate.now());
     }
 
     @Override
@@ -123,6 +124,17 @@ public class JTimeManager implements
                 .filter(t -> t.getPlannedDate() != null && 
                             !t.getPlannedDate().isBefore(start) && 
                             !t.getPlannedDate().isAfter(end))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<? extends Task> getCompletedTasks(LocalDate start, LocalDate end) {
+        return projects.stream()
+                .flatMap(p -> p.getTasks().stream())
+                .filter(t -> t.getState() == TaskState.COMPLETED && 
+                             t.getCompletionDate() != null &&
+                             !t.getCompletionDate().isBefore(start) && 
+                             !t.getCompletionDate().isAfter(end))
                 .collect(Collectors.toList());
     }
 }

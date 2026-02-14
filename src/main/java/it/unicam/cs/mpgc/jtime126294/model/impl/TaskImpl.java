@@ -25,6 +25,7 @@ public class TaskImpl implements Task {
     private Duration estimatedTime;
     private Duration actualTime;
     private LocalDate plannedDate;
+    private LocalDate completionDate;
     private Set<String> tags;
 
     public TaskImpl(Long id, String name, String description, Duration estimatedTime) {

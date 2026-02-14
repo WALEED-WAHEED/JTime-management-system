@@ -22,6 +22,7 @@ public class TaskMapper {
         entity.setId(domain.getId());
         entity.setActualTime(domain.getActualTime());
         entity.setPlannedDate(domain.getPlannedDate());
+        entity.setCompletionDate(domain.getCompletionDate());
         
         Set<TagEntity> tagEntities = domain.getTags().stream()
                 .map(tagName -> {
@@ -53,6 +54,7 @@ public class TaskMapper {
         domain.setState(entity.getState());
         domain.setActualTime(entity.getActualTime());
         domain.setPlannedDate(entity.getPlannedDate());
+        domain.setCompletionDate(entity.getCompletionDate());
         entity.getTags().forEach(tag -> domain.addTag(tag.getName()));
         
         return domain;

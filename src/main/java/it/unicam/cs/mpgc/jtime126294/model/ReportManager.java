@@ -21,4 +21,12 @@ public interface ReportManager {
      * @return collection of tasks in the interval
      */
     Collection<? extends Task> getReportByInterval(LocalDate start, LocalDate end);
+
+    /**
+     * Gets tasks completed within a specific time interval.
+     * @param start start date
+     * @param end end date
+     * @return collection of completed tasks in the interval
+     */
+    Collection<? extends Task> getCompletedTasks(LocalDate start, LocalDate end);
 }
